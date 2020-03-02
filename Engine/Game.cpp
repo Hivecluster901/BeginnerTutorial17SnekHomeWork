@@ -48,9 +48,10 @@ void Game::UpdateModel()
 	{
 		if( !gameIsOver )
 		{
+			float dt = ft.Mark();
 			if( wnd.kbd.KeyIsPressed( VK_UP ) )
 			{
-				delta_loc = { 0,-1 };
+				delta_loc = { 0,-1};
 			}
 			else if( wnd.kbd.KeyIsPressed( VK_DOWN ) )
 			{
