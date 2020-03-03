@@ -44,6 +44,7 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	float dt = ft.Mark();
 	if( gameIsStarted )
 	{
 		if( !gameIsOver )
@@ -64,11 +65,11 @@ void Game::UpdateModel()
 			{
 				delta_loc = { 1,0 };
 			}
-
-			++snekMoveCounter;
-			if( snekMoveCounter >= snekMovePeriod )
+			elapsedTime += dt;
+			snekUpdateTime = std::max(snekUpdateTime - snekAcceleration*dt, snekUpdateTimeMin);// linear update
+			if( elapsedTime >= snekUpdateTime)
 			{
-				snekMoveCounter = 0;
+				elapsedTime = 0;
 				const Location next = snek.GetNextHeadLocation( delta_loc );
 				if( !brd.IsInsideBoard( next ) ||
 					snek.IsInTileExceptEnd( next ) )
@@ -92,12 +93,12 @@ void Game::UpdateModel()
 					sfxSlither.Play( rng,0.08f );
 				}
 			}
-			++snekSpeedupCounter;
+			/*++snekSpeedupCounter;
 			if( snekSpeedupCounter >= snekSpeedupPeriod )
 			{
 				snekSpeedupCounter = 0;
 				snekMovePeriod = std::max( snekMovePeriod - 1,snekMovePeriodMin );
-			}
+			}*/
 		}
 	}
 	else

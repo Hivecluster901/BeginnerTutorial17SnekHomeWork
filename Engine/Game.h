@@ -28,6 +28,7 @@
 #include "Goal.h"
 #include <random>
 #include "SoundEffect.h"
+#include "FrameTimer.h"
 
 class Game
 {
@@ -47,6 +48,7 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	FrameTimer ft;
 	Board brd;
 	Snake snek;
 	Location delta_loc = {1,0};
@@ -57,11 +59,13 @@ private:
 	Sound sndMusic = Sound( L"Sounds\\Music_Loop.wav",Sound::LoopType::AutoFullSound );
 	Sound sndTitle = Sound( L"Sounds\\Title.wav" );
 	Sound sndFart = Sound( L"Sounds\\Fart.wav" );
-	static constexpr int snekMovePeriodMin = 4;
-	int snekMovePeriod = 20;
-	int snekMoveCounter = 0;
-	static constexpr int snekSpeedupPeriod = 180;
-	int snekSpeedupCounter = 0;
+	//static constexpr int snekMovePeriodMin = 4;
+	//static constexpr int snekSpeedupPeriod = 180;
+	//int snekSpeedupCounter = 0;
+	float elapsedTime = 0;
+	float snekUpdateTime = 0.7f;// 1 cell per 0.7 second
+	float snekAcceleration = 0.04f;// 0.02 cell per second squared 
+	float snekUpdateTimeMin = 1.0f/ 15; // 15 cells per second is the maximum speed of the snek.
 	bool gameIsOver = false;
 	bool gameIsStarted = false;
 	/********************************/
